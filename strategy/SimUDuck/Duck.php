@@ -13,4 +13,9 @@ abstract class Duck
     }
 
     abstract public function display();
+
+    public function fly()
+    {
+        return 'flying...';
+    }
 }
