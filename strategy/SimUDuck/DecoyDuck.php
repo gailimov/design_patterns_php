@@ -1,15 +1,14 @@
 <?php
 
-class RubberDuck extends Duck
+class DecoyDuck extends Duck
 {
     public function quack()
     {
-        return 'squeak';
     }
 
     public function display()
     {
-        return 'displaying rubber duck';
+        return 'displaying decoy duck';
     }
 
     public function fly()
