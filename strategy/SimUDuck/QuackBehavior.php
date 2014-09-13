@@ -1,6 +1,6 @@
 <?php
 
-interface Quackable
+interface QuackBehavior
 {
     public function quack();
 }

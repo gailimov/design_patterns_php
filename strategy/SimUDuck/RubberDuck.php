@@ -1,10 +1,11 @@
 <?php
 
-class RubberDuck extends Duck implements Quackable
+class RubberDuck extends Duck
 {
-    public function quack()
+    public function __construct()
     {
-        return 'squeak';
+        $this->quackBehavior = new Squeak();
+        $this->flyBehavior = new FlyNoWay();
     }
 
     public function display()
