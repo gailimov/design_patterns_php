@@ -1,5 +1,7 @@
 <?php
 
+require_once 'Quackable.php';
+require_once 'Flyable.php';
 require_once 'Duck.php';
 require_once 'MallardDuck.php';
 require_once 'RedheadDuck.php';
@@ -29,13 +31,10 @@ $rubber = new RubberDuck();
 echo $rubber->quack() . PHP_EOL;
 echo $rubber->swim() . PHP_EOL;
 echo $rubber->display() . PHP_EOL;
-echo $rubber->fly() . PHP_EOL;
 
 echo '=========================' . PHP_EOL;
 
 echo 'Decoy duck:' . PHP_EOL;
 $decoy = new DecoyDuck();
-echo $decoy->quack() . PHP_EOL;
 echo $decoy->swim() . PHP_EOL;
 echo $decoy->display() . PHP_EOL;
-echo $decoy->fly() . PHP_EOL;

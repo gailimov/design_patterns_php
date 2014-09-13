@@ -1,6 +1,6 @@
 <?php
 
-class RubberDuck extends Duck
+class RubberDuck extends Duck implements Quackable
 {
     public function quack()
     {
@@ -10,9 +10,5 @@ class RubberDuck extends Duck
     public function display()
     {
         return 'displaying rubber duck';
-    }
-
-    public function fly()
-    {
     }
 }
