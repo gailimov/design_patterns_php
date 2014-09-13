@@ -7,11 +7,13 @@ require_once 'Squeak.php';
 require_once 'MuteQuack.php';
 require_once 'FlyWithWings.php';
 require_once 'FlyNoWay.php';
+require_once 'FlyRocketPowered.php';
 require_once 'Duck.php';
 require_once 'MallardDuck.php';
 require_once 'RedheadDuck.php';
 require_once 'RubberDuck.php';
 require_once 'DecoyDuck.php';
+require_once 'ModelDuck.php';
 
 echo 'Mallard duck:' . PHP_EOL;
 $mallard = new MallardDuck();
@@ -46,3 +48,14 @@ echo $decoy->performQuack() . PHP_EOL;
 echo $decoy->swim() . PHP_EOL;
 echo $decoy->display() . PHP_EOL;
 echo $decoy->performFly() . PHP_EOL;
+
+echo '=========================' . PHP_EOL;
+
+echo 'Model duck:' . PHP_EOL;
+$model = new ModelDuck();
+echo $model->performQuack() . PHP_EOL;
+echo $model->swim() . PHP_EOL;
+echo $model->display() . PHP_EOL;
+echo $model->performFly() . PHP_EOL;
+$model->setFlyBehavior(new FlyRocketPowered());
+echo $model->performFly() . PHP_EOL;
