@@ -1,27 +1,30 @@
 <?php
 
-class CurrentConditionsDisplay implements Observer, DisplayElement
+class CurrentConditionsDisplay implements SplObserver, DisplayElement
 {
+    /**
+     * SplSubject
+     */
+    private $subject;
+
     private $temperature;
     private $himidity;
 
-    /**
-     * @var Subject
-     */
-    private $weatherData;
-
-    public function __construct(Subject $weatherData)
+    public function __construct(SplSubject $subject)
     {
-        $this->weatherData = $weatherData;
-        $this->weatherData->registerObserver($this);
+        $this->subject = $subject;
+        $this->subject->attach($this);
     }
 
-    public function update($temperature, $himidity, $pressure)
+    public function update(SplSubject $subject)
     {
-        $this->temperature = $temperature;
-        $this->himidity = $himidity;
+        if ($subject instanceof WeatherData) {
+            $weatherData = $subject;
+            $this->temperature = $weatherData->getTemperature();
+            $this->himidity = $weatherData->getHimidity();
 
-        $this->display();
+            $this->display();
+        }
     }
 
     public function display()

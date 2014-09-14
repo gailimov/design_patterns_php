@@ -1,6 +1,6 @@
 <?php
 
-class StatisticsDisplay implements Observer, DisplayElement
+class StatisticsDisplay implements SplObserver, DisplayElement
 {
     private $maxTemp = 0.0;
     private $minTemp = 200;
@@ -8,30 +8,35 @@ class StatisticsDisplay implements Observer, DisplayElement
     private $numReadings;
 
     /**
-     * @var Subject
+     * @var SplSubject
      */
     private $weatherData;
 
-    public function __construct(Subject $weatherData)
+    public function __construct(SplSubject $weatherData)
     {
         $this->weatherData = $weatherData;
-        $this->weatherData->registerObserver($this);
+        $this->weatherData->attach($this);
     }
 
-    public function update($temperature, $himidiry, $pressure)
+    public function update(SplSubject $subject)
     {
-        $this->tempSum += $temperature;
-        $this->numReadings++;
+        if ($subject instanceof WeatherData) {
+            $weatherData = $subject;
+            $temperature = $weatherData->getTemperature();
 
-        if ($temperature > $this->maxTemp) {
-            $this->maxTemp = $temperature;
+            $this->tempSum += $temperature;
+            $this->numReadings++;
+
+            if ($temperature > $this->maxTemp) {
+                $this->maxTemp = $temperature;
+            }
+
+            if ($temperature < $this->minTemp) {
+                $this->minTemp = $temperature;
+            }
+
+            $this->display();
         }
-
-        if ($temperature < $this->minTemp) {
-            $this->minTemp = $temperature;
-        }
-
-        $this->display();
     }
 
     public function display()

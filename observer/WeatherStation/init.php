@@ -1,8 +1,6 @@
 <?php
 
-require_once 'Subject.php';
 require_once 'WeatherData.php';
-require_once 'Observer.php';
 require_once 'DisplayElement.php';
 require_once 'CurrentConditionsDisplay.php';
 require_once 'StatisticsDisplay.php';

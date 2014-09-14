@@ -1,27 +1,31 @@
 <?php
 
-class ForecastDisplay implements Observer, DisplayElement
+class ForecastDisplay implements SplObserver, DisplayElement
 {
     private $currentPressure = 29.92;
     private $lastPressure;
 
     /**
-     * @var Subject
+     * @var SplSubject
      */
     private $weatherData;
 
-    public function __construct(Subject $weatherData)
+    public function __construct(SplSubject $weatherData)
     {
         $this->weatherData = $weatherData;
-        $this->weatherData->registerObserver($this);
+        $this->weatherData->attach($this);
     }
 
-    public function update($temperature, $himidiy, $pressure)
+    public function update(SplSubject $subject)
     {
-        $this->lastPressure = $this->currentPressure;
-        $this->currentPressure = $pressure;
+        if ($subject instanceof WeatherData) {
+            $weatherData = $subject;
 
-        $this->display();
+            $this->lastPressure = $this->currentPressure;
+            $this->currentPressure = $weatherData->getPressure();
+
+            $this->display();
+        }
     }
 
     public function display()

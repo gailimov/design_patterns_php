@@ -1,34 +1,37 @@
 <?php
 
-class WeatherData implements Subject
+class WeatherData implements SplSubject
 {
-    private $observers = [];
+    private $observers;
     private $temperature;
     private $himidity;
     private $pressure;
 
-    public function registerObserver(Observer $o)
+    public function __construct()
     {
-        $this->observers[] = $o;
+        $this->observers = new SplObjectStorage();
     }
 
-    public function removeObserver(Observer $o)
+    public function attach(SplObserver $observer)
     {
-        if ($observers[$o]) {
-            unset($this->observers[$o]);
-        }
+        $this->observers->attach($observer);
     }
 
-    public function notifyObservers()
+    public function detach(SplObserver $observer)
     {
-        for ($i = 0, $count = count($this->observers); $i < $count; $i++) {
-            $this->observers[$i]->update($this->temperature, $this->himidity, $this->pressure);
+        $this->observers->detach($observer);
+    }
+
+    public function notify()
+    {
+        foreach ($this->observers as $observer) {
+            $observer->update($this);
         }
     }
 
     public function measurementsChanged()
     {
-        $this->notifyObservers();
+        $this->notify();
     }
 
     public function setMeasurements($temperature, $himidity, $pressure)
@@ -38,5 +41,20 @@ class WeatherData implements Subject
         $this->pressure = $pressure;
 
         $this->measurementsChanged();
+    }
+
+    public function getTemperature()
+    {
+        return $this->temperature;
+    }
+
+    public function getHimidity()
+    {
+        return $this->himidity;
+    }
+
+    public function getPressure()
+    {
+        return $this->pressure;
     }
 }
