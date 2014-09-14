@@ -1,52 +1,42 @@
 <?php
 
-class WeatherData
+class WeatherData implements Subject
 {
-    /**
-     * @var CurrentConditionsDisplay
-     */
-    protected $currentConditionsDisplay;
+    private $observers = [];
+    private $temperature;
+    private $himidity;
+    private $pressure;
 
-    /**
-     * @var StatisticsDisplay
-     */
-    protected $statisticsDisplay;
-
-    /**
-     * @var ForecastDisplay
-     */
-    protected $forecastDisplay;
-
-    public function __construct(CurrentConditionsDisplay $currentConditionsDisplay, StatisticsDisplay $statisticsDisplay, ForecastDisplay $forecastDisplay)
+    public function registerObserver(Observer $o)
     {
-        $this->currentConditionsDisplay = $currentConditionsDisplay;
-        $this->statisticsDisplay = $statisticsDisplay;
-        $this->forecastDisplay = $forecastDisplay;
+        $this->observers[] = $o;
     }
 
-    public function getTemperature()
+    public function removeObserver(Observer $o)
     {
-        return 22;
+        if ($observers[$o]) {
+            unset($this->observers[$o]);
+        }
     }
 
-    public function getHimidity()
+    public function notifyObservers()
     {
-        return 50;
-    }
-
-    public function getPressure()
-    {
-        return 600;
+        for ($i = 0, $count = count($this->observers); $i < $count; $i++) {
+            $this->observers[$i]->update($this->temperature, $this->himidity, $this->pressure);
+        }
     }
 
     public function measurementsChanged()
     {
-        $temperature = $this->getTemperature();
-        $himidity = $this->getHimidity();
-        $pressure = $this->getPressure();
+        $this->notifyObservers();
+    }
 
-        $this->currentConditionsDisplay->update($temperature, $himidity, $pressure);
-        $this->statisticsDisplay->update($temperature, $himidity, $pressure);
-        $this->forecastDisplay->update($temperature, $himidity, $pressure);
+    public function setMeasurements($temperature, $himidity, $pressure)
+    {
+        $this->temperature = $temperature;
+        $this->himidity = $himidity;
+        $this->pressure = $pressure;
+
+        $this->measurementsChanged();
     }
 }
