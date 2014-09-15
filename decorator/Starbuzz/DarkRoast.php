@@ -9,6 +9,8 @@ class DarkRoast extends Beverage
 
     public function cost()
     {
-        return 4.15;
+        $cost = parent::cost();
+
+        return $cost += 4.15;
     }
 }

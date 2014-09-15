@@ -9,6 +9,8 @@ class Decaf extends Beverage
 
     public function cost()
     {
-        return 3;
+        $cost = parent::cost();
+
+        return $cost += 3;
     }
 }
