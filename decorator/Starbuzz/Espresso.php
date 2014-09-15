@@ -9,8 +9,6 @@ class Espresso extends Beverage
 
     public function cost()
     {
-        $cost = parent::cost();
-
-        return $cost += 3;
+        return 1.99;
     }
 }

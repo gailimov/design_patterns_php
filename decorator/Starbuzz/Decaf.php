@@ -4,13 +4,11 @@ class Decaf extends Beverage
 {
     public function __construct()
     {
-        $this->description = 'Decaf';
+        $this->description = 'Decaf Coffee';
     }
 
     public function cost()
     {
-        $cost = parent::cost();
-
-        return $cost += 3;
+        return 0.79;
     }
 }

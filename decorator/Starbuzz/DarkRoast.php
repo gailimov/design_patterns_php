@@ -4,13 +4,11 @@ class DarkRoast extends Beverage
 {
     public function __construct()
     {
-        $this->description = 'Dark Roast';
+        $this->description = 'Dark Roast Coffee';
     }
 
     public function cost()
     {
-        $cost = parent::cost();
-
-        return $cost += 4.15;
+        return 0.99;
     }
 }
