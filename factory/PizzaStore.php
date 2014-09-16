@@ -2,19 +2,19 @@
 
 class PizzaStore
 {
+    /**
+     * @var SimplePizzaFactory
+     */
+    private $factory;
+
+    public function __construct(SimplePizzaFactory $factory)
+    {
+        $this->factory = $factory;
+    }
+
     public function orderPizza($type)
     {
-        switch ($type) {
-            case 'cheese':
-                $pizza = new CheesePizza();
-                break;
-            case 'pepperoni':
-                $pizza = new PepperoniPizza();
-                break;
-            case 'veggie':
-                $pizza = new VeggiePizza();
-                break;
-        }
+        $pizza = $this->factory->createPizza($type);
 
         $pizza
             ->prepare()
